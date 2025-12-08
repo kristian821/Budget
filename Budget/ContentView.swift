@@ -6,19 +6,32 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @Query private var accounts: [Account]
+    @State private var showAddNewAccount: Bool = false
+//    @Environment(\.modelContext) private var modelContext
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        HStack {
+            Spacer()
+            Button(action: {
+                showAddNewAccount.toggle()
+            }) {
+                Label("Add Account", systemImage: "plus")
+            }
+            Spacer()
         }
-        .padding()
+        .sheet(isPresented: $showAddNewAccount) {
+            AddAccountView()
+                
+        }
+        
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(previewContainer)
 }
